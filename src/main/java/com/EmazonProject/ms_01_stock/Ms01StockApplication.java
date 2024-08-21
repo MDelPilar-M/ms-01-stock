@@ -8,6 +8,7 @@ public class Ms01StockApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Ms01StockApplication.class, args);
+		System.out.println("Start Project");
 	}
 
 }
