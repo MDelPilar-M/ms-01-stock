@@ -1,14 +1,15 @@
-package com.EmazonProject.ms_01_stock.dominio.api;
+package com.emazonproject.ms_01_stock.dominio.api;
 
-import com.EmazonProject.ms_01_stock.dominio.model.Category;
+import com.emazonproject.ms_01_stock.dominio.model.Category;
 
 import java.util.List;
 
-public interface CategoryServicePort {
+public interface ICategoryServicePort {
 
     void saveCategory(Category category);
-    List<Category> getAllCategory();
-    Category getCategory(String nameCtg);
+    Category getOneCategory (String name);
+    List<Category> getAllCategory(Integer page, Integer size);
+
 
 
 }

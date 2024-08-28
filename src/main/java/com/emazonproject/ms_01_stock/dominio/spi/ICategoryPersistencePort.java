@@ -1,12 +1,14 @@
-package com.EmazonProject.ms_01_stock.spi;
+package com.emazonproject.ms_01_stock.dominio.spi;
 
-import com.EmazonProject.ms_01_stock.dominio.model.Category;
+import com.emazonproject.ms_01_stock.dominio.model.Category;
 
 import java.util.List;
 
-public interface iCategoryPersistencePort {
+public interface ICategoryPersistencePort {
 
     void saveCategory(Category category);
-    List<Category> getAllCategory();
-    Category getCategory(String nameCtg);
+    Category getOneCategory (String name);
+    List<Category> getAllCategory(Integer page, Integer size);
+    boolean existsByName(String name);
+
 }

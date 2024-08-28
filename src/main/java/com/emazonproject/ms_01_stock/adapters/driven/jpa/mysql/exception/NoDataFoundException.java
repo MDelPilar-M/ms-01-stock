@@ -1,4 +1,7 @@
-package com.EmazonProject.ms_01_stock.adapters.driven.jpa.mysql.exception;
+package com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.exception;
 
-public class NoDataFoundException {
+public class NoDataFoundException extends RuntimeException {
+    public NoDataFoundException() {
+        super();
+    }
 }

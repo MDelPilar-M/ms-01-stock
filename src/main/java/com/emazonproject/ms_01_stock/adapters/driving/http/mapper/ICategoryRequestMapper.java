@@ -1,7 +1,7 @@
-package com.EmazonProject.ms_01_stock.adapters.mapper;
+package com.emazonproject.ms_01_stock.adapters.driving.http.mapper;
 
-import com.EmazonProject.ms_01_stock.adapters.driving.http.dto.request.CategoryRequest;
-import com.EmazonProject.ms_01_stock.dominio.model.Category;
+import com.emazonproject.ms_01_stock.adapters.driving.http.dto.request.CategoryRequest;
+import com.emazonproject.ms_01_stock.dominio.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -10,12 +10,10 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 
-public interface iCategoryRequestMapper {
+public interface ICategoryRequestMapper {
     // convertir de CategoryRequest a Category
 
-    @Mapping(target = "idCtg", ignore = true)
-    @Mapping(target = "nameCtg")
-    @Mapping(target = "descriptionCtg")
+    @Mapping(target = "id", ignore = true)
     Category toCategory(CategoryRequest categoryRequest);
 
 }

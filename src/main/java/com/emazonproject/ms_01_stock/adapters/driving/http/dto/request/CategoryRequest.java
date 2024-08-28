@@ -1,29 +1,25 @@
-package com.EmazonProject.ms_01_stock.adapters.driving.http.dto.request;
+package com.emazonproject.ms_01_stock.adapters.driving.http.dto.request;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class CategoryRequest {
 
-    private String nameCtg;
-    private String descriptionCtg;
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    public CategoryRequest(String nameCtg, String descriptionCtg) {
-        this.nameCtg = nameCtg;
-        this.descriptionCtg = descriptionCtg;
-    }
+    @NotBlank(message = "La descripción es obligatoria")
+    @Size(max = 90, message = "La descripción no puede tener más de 90 caracteres")
+    @Column(nullable = false)
+    private String description;
 
-    public String getNameCtg() {
-        return nameCtg;
-    }
-
-    public void setNameCtg(String nameCtg) {
-        this.nameCtg = nameCtg;
-    }
-
-    public String getDescriptionCtg() {
-        return descriptionCtg;
-    }
-
-    public void setDescriptionCtg(String descriptionCtg) {
-        this.descriptionCtg = descriptionCtg;
-    }
 }

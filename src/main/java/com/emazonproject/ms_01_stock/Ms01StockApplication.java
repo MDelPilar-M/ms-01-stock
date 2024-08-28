@@ -1,4 +1,4 @@
-package com.EmazonProject.ms_01_stock;
+package com.emazonproject.ms_01_stock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
