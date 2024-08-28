@@ -6,8 +6,8 @@ import com.emazonproject.ms_01_stock.dominio.exception.EmptyFieldException;
 import com.emazonproject.ms_01_stock.dominio.model.Category;
 import com.emazonproject.ms_01_stock.dominio.spi.ICategoryPersistencePort;
 import com.emazonproject.ms_01_stock.dominio.util.DomainConstants;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class CategoryUseCase implements ICategoryServicePort {
 
@@ -30,23 +30,15 @@ public class CategoryUseCase implements ICategoryServicePort {
     public Category getOneCategory(String name) {return categoryPersistencePort.getOneCategory(name);}
 
     @Override
-    public List<Category> getAllCategory(Integer pageNumber, Integer pageSize) {
-        return categoryPersistencePort.getAllCategory(pageNumber, pageSize);
+    public Page<Category> getAllCategory(Pageable pageable) {
+        return categoryPersistencePort.getAllCategory(pageable);
     }
 
     private void validateCategory(Category category) {
 
-        if (category.getName() == null || category.getName().trim().isEmpty()) {
-            throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
-        }
-        if (category.getName().length() > DomainConstants.DATA_SIZE_LIMIT_NAME) {
-            throw new IllegalArgumentException(DomainConstants.DATA_SIZE_LIMIT_NAME_MESSAGE);
-        }
-        if (category.getDescription() == null || category.getDescription().trim().isEmpty()) {
-            throw new EmptyFieldException(DomainConstants.Field.DESCRIPTION.toString());
-        }
-        if (category.getDescription().length() > DomainConstants.DATA_SIZE_LIMIT_DESCRIPTION) {
-            throw new IllegalArgumentException(DomainConstants.DATA_SIZE_LIMIT_DESCRIPTION_MESSAGE);
-        }
+        if (category.getName() == null || category.getName().trim().isEmpty()) {throw new EmptyFieldException(DomainConstants.Field.NAME.toString());}
+        if (category.getName().length() > DomainConstants.DATA_SIZE_LIMIT_NAME) {throw new IllegalArgumentException(DomainConstants.DATA_SIZE_LIMIT_NAME_MESSAGE);}
+        if (category.getDescription() == null || category.getDescription().trim().isEmpty()) {throw new EmptyFieldException(DomainConstants.Field.DESCRIPTION.toString());}
+        if (category.getDescription().length() > DomainConstants.DATA_SIZE_LIMIT_DESCRIPTION) {throw new IllegalArgumentException(DomainConstants.DATA_SIZE_LIMIT_DESCRIPTION_MESSAGE);}
     }
 }

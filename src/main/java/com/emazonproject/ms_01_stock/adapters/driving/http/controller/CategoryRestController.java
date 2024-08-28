@@ -5,13 +5,16 @@ import com.emazonproject.ms_01_stock.adapters.driving.http.dto.response.Category
 import com.emazonproject.ms_01_stock.adapters.driving.http.mapper.ICategoryRequestMapper;
 import com.emazonproject.ms_01_stock.adapters.driving.http.mapper.ICategoryResponseMapper;
 import com.emazonproject.ms_01_stock.dominio.api.ICategoryServicePort;
+import com.emazonproject.ms_01_stock.dominio.model.Category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
@@ -29,10 +32,17 @@ public class CategoryRestController {
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<CategoryResponse>> getAllCategory(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        return ResponseEntity.ok(categoryResponseMapper.toResponseList(categoryServicePort.getAllCategory(pageNumber, pageSize)));
+    public Page<CategoryResponse> getAllCategories(
+            @RequestParam(required = false, defaultValue = "name") String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String sortOrder,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Sort sort = Sort.by(sortOrder.equalsIgnoreCase("desc") ? Sort.Order.desc(sortBy) : Sort.Order.asc(sortBy));
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Category> categoryPage = categoryServicePort.getAllCategory(pageable);
+        return categoryResponseMapper.toResponsePage(categoryPage);
+
     }
-
-
-
 }

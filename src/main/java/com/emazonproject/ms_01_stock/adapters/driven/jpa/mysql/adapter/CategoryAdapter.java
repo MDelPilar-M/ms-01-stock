@@ -3,15 +3,13 @@ package com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.adapter;
 import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.entity.CategoryEntity;
 import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.exception.CategoryAlreadyExistsException;
 import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
-import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.mapper.ICategoryEntityMapper;
 import com.emazonproject.ms_01_stock.adapters.driven.jpa.mysql.repository.ICategoryRepository;
 import com.emazonproject.ms_01_stock.dominio.model.Category;
 import com.emazonproject.ms_01_stock.dominio.spi.ICategoryPersistencePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class CategoryAdapter implements ICategoryPersistencePort {
@@ -35,15 +33,11 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     }
 
     @Override
-    public List<Category> getAllCategory(Integer pageNumber, Integer pageSize) {
-          Pageable pagination = PageRequest.of(pageNumber, pageSize);
-          List<CategoryEntity> categories=categoryRepository.findAll(pagination).getContent();
-          if (categories.isEmpty()){
-              throw new NoDataFoundException();
-          }
-          return categoryEntityMapper.toModelList(categories);
-
+    public Page<Category> getAllCategory(Pageable pageable) {
+        Page<CategoryEntity> categoryEntities = categoryRepository.findAll(pageable);
+        return categoryEntities.map(categoryEntityMapper::toModel);
     }
+
 
     @Override
     public boolean existsByName(String name) {
